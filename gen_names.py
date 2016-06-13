@@ -29,6 +29,9 @@ class filipino_name:
   def last_name(self):
     return rand_from(filipino_last_names)
 
+  def last_name_male(self):
+    return rand_from(filipino_last_names)
+
 class simp_chinese_name:
   def first_name(self):
     return hanzi.to_pinyin(fake_simp_china.first_name()).title()
@@ -37,6 +40,9 @@ class simp_chinese_name:
     return hanzi.to_pinyin(fake_simp_china.first_name_male()).title()
 
   def last_name(self):
+    return hanzi.to_pinyin(fake_simp_china.last_name()).title()
+
+  def last_name_male(self):
     return hanzi.to_pinyin(fake_simp_china.last_name()).title()
 
 fake_bulgarian = Factory.create('bg_BG')
@@ -82,7 +88,7 @@ def name_both(name_gen):
   return lambda: name_gen.first_name() + nbsp + name_gen.last_name()
 
 def name_male(name_gen):
-  return lambda: name_gen.first_name_male() + nbsp + name_gen.last_name()
+  return lambda: name_gen.first_name_male() + nbsp + name_gen.last_name_male()
 
 def gen_chinese_names(count, linebreak=True):
   genname = lambda x: nbsp.join(list(fake_simp_china.name()))
@@ -133,7 +139,7 @@ def gen_ship_name():
   return rand_from(["Miss ", "Spirit of ", "Cap ", "HMS ", "", "", ""]) + rand_from([fake_uk, fake_spain]).first_name()
 
 def gen_ship(route):
-  return { "name": gen_ship_name(), "flag": rand_from(["Panama", "Liberia", "Marshall Islands", "Bahamas"]), "company": rand_from(["CMA", "COSCO", "CSC", "Hamburg Süd", "Maersk"]), "captain": rand_captain_name(), "crew": gen_ship_crew(), "route": route }
+  return { "name": gen_ship_name(), "flag": rand_from(["Panama", "Liberia", "Marshall Islands", "Bahamas"]), "company": rand_from(["CMA", "COSCO", "CSC", "Maersk"]), "captain": rand_captain_name(), "crew": gen_ship_crew(), "route": route }
 
 ship_template = string.Template("""\
 h2 $route
@@ -305,6 +311,27 @@ html
       .chinesenames {
         column-width: 3.3em;
         text-align: right;
+      }
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenLite.min.js")
+    script(type="text/javascript").
+      window.onmousemove = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      };
+
+      var windowPos = {
+        pos: 0
+      }
+
+      window.onload = function() {
+        console.log('window loaded');
+        TweenLite.to(windowPos, {
+          pos: window.innerHeight,
+          duration: 10,
+          onUpdate: function() {
+            window.scrollTo(0, windowPos.pos)
+          }
+        });
       }
   body
     h1 iPhone
