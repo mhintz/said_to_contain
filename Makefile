@@ -1,4 +1,4 @@
-.PHONY: all install
+.PHONY: all install deploy
 
 install:
 	pip3 install dragonmapper fake-factory
@@ -9,3 +9,6 @@ all: index.html
 index.html: gen_names.py names_db.py
 	python3 gen_names.py
 	jade --pretty < iphone_credits.jade > index.html
+
+deploy:
+	git push origin master:gh-pages
