@@ -82,6 +82,7 @@ fake_filipino = filipino_name()
 fake_chinese_pinyin_stub = simp_chinese_name()
 
 person_spacer = '<span class="personspace"> </span>'
+line_break = '<br/>'
 nbsp = '&nbsp'
 
 def name_both(name_gen):
@@ -93,14 +94,14 @@ def name_both(name_gen):
 def name_male(name_gen):
   return lambda: name_gen.first_name_male() + nbsp + name_gen.last_name_male()
 
-def gen_chinese_names(count, linebreak=True):
+def gen_chinese_names(count, break_lines=False):
   genname = lambda x: nbsp.join(list(fake_simp_china.name()))
-  joiner = '<br/>' if linebreak else ''
+  joiner = line_break if break_lines else person_spacer
   return joiner.join(map(genname, range(count)))
 
-def gen_chinese_male_names(count, linebreak=True):
+def gen_chinese_male_names(count, break_lines=False):
   genname = lambda x: nbsp.join(list(fake_simp_china.name_male()))
-  joiner = '<br/>' if linebreak else ''
+  joiner = line_break if break_lines else person_spacer
   return joiner.join(map(genname, range(count)))
 
 def gen_congolese_male_names(count):
@@ -200,52 +201,53 @@ template_variables = {
   "brazilneodym": gen_rand_names(name_male(fake_brazilian), 3),
   "ship14": rand_ship("Brazil to China"),
 
-  "chinprasedym": gen_chinese_male_names(1, False),
-  "chinrailpraseodym": gen_chinese_male_names(3, False),
+  "chinprasedym": gen_chinese_male_names(1),
+  "chinrailpraseodym": gen_chinese_male_names(3),
 
   "turkboron": gen_rand_names(name_male(fake_turkish), 1),
   "ship15": rand_ship("Turkey to China"),
 
-  "chindyspros": gen_chinese_male_names(1, False),
-  "chinraildyspros": gen_chinese_male_names(8, False),
+  "chindyspros": gen_chinese_male_names(1),
+  "chinraildyspros": gen_chinese_male_names(8),
 
   "canpotash": gen_rand_names(name_male(fake_canada), 13),
   "ship16": rand_ship("Canada to China"),
 
-  "chinindium": gen_chinese_male_names(1, False),
+  "chinindium": gen_chinese_male_names(1),
 
-  "chinrareearth": gen_chinese_male_names(32, False),
+  "chinrareearth": gen_chinese_male_names(60),
+  "chinarareearthrail": gen_chinese_male_names(24),
 
-  "chinsteelwork": gen_chinese_male_names(30, False),
-  "chinsteelrail": gen_chinese_male_names(10, False),
+  "chinsteelwork": gen_chinese_male_names(54),
+  "chinsteelrail": gen_chinese_male_names(24),
 
   "amereleceng": gen_rand_names(name_both(fake_us), 100),
   "amerproddesign": gen_rand_names(name_both(fake_us), 40),
   "amermarketers": gen_rand_names(name_both(fake_us), 20),
 
   "sonyfac": gen_rand_names(name_both(fake_japanese), 30),
-  "ship17": rand_ship("Japan to China"),
+  "ship17": rand_ship("Japan to China (Carrying Camera Components)"),
 
   "sharpfac": gen_rand_names(name_both(fake_japanese), 30),
-  "ship18": rand_ship("Japan to China"),
-
-  "fingerprintfac": gen_rand_names(name_both(fake_trad_china), 7),
-  "ship19": rand_ship("Taiwan to China"),
-
-  "inductorfac": gen_rand_names(name_both(fake_japanese), 10),
-  "ship20": rand_ship("Japan to China"),
-
-  "toshibafac": gen_rand_names(name_both(fake_japanese), 20),
-  "ship21": rand_ship("Japan to China"),
+  "ship18": rand_ship("Japan to China (Carrying Screens)"),
 
   "samsungfac": gen_rand_names(name_both(fake_korean), 150),
-  "ship23": rand_ship("Korea to China"),
+  "ship23": rand_ship("Korea to China (Carrying Processors)"),
 
-  "foxconnworkers": gen_chinese_names(2200),
-  "foxconnfloorboss": gen_chinese_names(110),
-  "foxconnmanagers": gen_rand_names(name_male(fake_chinese_pinyin_stub), 10),
-  "foxconnexec": gen_rand_names(name_male(fake_chinese_pinyin_stub), 1),
-  "ship22": rand_ship("China to Rotterdam"),
+  "fingerprintfac": gen_rand_names(name_both(fake_trad_china), 7),
+  "ship19": rand_ship("Taiwan to China (Carrying Fingerprint Components)"),
+
+  "inductorfac": gen_rand_names(name_both(fake_japanese), 10),
+  "ship20": rand_ship("Japan to China (Carrying Inductor Coils)"),
+
+  "toshibafac": gen_rand_names(name_both(fake_japanese), 20),
+  "ship21": rand_ship("Japan to China (Carrying Memory)"),
+
+  "foxconnworkers": gen_chinese_names(3200, True),
+  "foxconnfloorboss": gen_chinese_names(210, True),
+  "foxconnmanagers": gen_rand_names(name_male(fake_chinese_pinyin_stub), 50),
+  "foxconnexec": person_spacer.join(["Tai Jeng-wu", "Huang Qing-Yuan", "Lu Fang-ming", "Chien Yi-bin", "Wu Yu-Chi", "Liu Cheng-Yu", "Wan Jui-hsia", "Min-chih Chuo"]),
+  "ship22": rand_ship("China to Rotterdam (Carrying iPhones)"),
 
   "dutchworkers": gen_rand_names(name_male(fake_dutch), 4),
   "germanriver": gen_rand_names(name_male(fake_german), 3),
@@ -304,6 +306,7 @@ html
       }
       .bigtopspace {
         margin-top: 10em;
+        margin-bottom: 5em;
       }
       .personspace {
         margin-left: 1.2em;
@@ -415,30 +418,38 @@ html
     h2 Chinese Miners Of Assorted Rare Earths
     p $chinrareearth
 
+    h2 Chinese Rail Workers (Rare Earth Shipment)
+    p $chinarareearthrail
+
     h2 Chinese Steel Workers
     p $chinsteelwork
 
-    h2 Chinese Rail Workers (steel Shipment)
+    h2 Chinese Rail Workers (Steel Shipment)
     p $chinsteelrail
 
-    h2 American Electronic Engineers (100,000 Emails)
+    h2 American Electronic Engineers, Apple (100,000 Emails)
     p $amereleceng
 
-    h2 American Product Designers (40,000 Emails)
+    h2 American Product Designers, Apple (40,000 Emails)
     p $amerproddesign
 
-    h2 American Marketers (30,000 Emails)
+    h2 American Marketers, Apple (30,000 Emails)
     p $amermarketers
 
-    h2 Chief Design Officer (1,000 Emails)
+    h2 Chief Design Officer, Apple (1,000 Emails)
     p.centered Jony Ive
     
-    h2 Sony Factory Workers: Isight Camera
+    h2 Japanese Factory Workers for Sony: Isight Camera
     p $sonyfac
 
     $ship17
 
-    h2 Sharp Factory Workers: Retina Screen
+    h2 Korean Factory Workers for Samsung: A5 Processor
+    p $samsungfac
+
+    $ship23
+
+    h2 Japanese Factory Workers for Sharp: Retina Screen
     p $sharpfac
 
     $ship18
@@ -453,39 +464,41 @@ html
 
     $ship20
 
-    h2 Toshiba Factory Workers: Memory
+    h2 Japanese Factory Workers for Toshiba: Memory
     p $toshibafac
 
     $ship21
 
-    h2 Samsung Factory Workers: A5 Processor
-    p $samsungfac
-
-    $ship23
-
-    h2 Foxconn Factory Assembly Line Workers
+    h2 Chinese Factory Assembly Line Workers for Foxconn
     p.chinesenames $foxconnworkers
     h2 Foxconn Factory Floor Bosses
     p.chinesenames $foxconnfloorboss
     h2 Foxconn Factory Managers
     p $foxconnmanagers
-    h2 Foxconn Factory Executive
+
+    h2 Foxconn Executives
     p $foxconnexec
+
+    h2 Foxconn Chairman
+    p Terry Gou
 
     $ship22
 
     h2 Dutch Dock Workers
     p $dutchworkers
 
-    h2 German River Barge Drivers
+    h2 German River Barge Drivers, Rotterdam to Basel
     p $germanriver
 
     h2 Swiss Train Conductor
     p.centered $swisstrain
+
     h2 Swiss Apple Store Stock Manager
     p.centered $swissaplstock
-    h2 Swiss Telecoms Employee
+
+    h2 Swisscom Employee
     p.centered $swisstelcom
+
     h2 Swiss Apple Store Salesmen
     p.centered $swissaplsales
 
