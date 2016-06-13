@@ -1,4 +1,8 @@
-.PHONY: all
+.PHONY: all install
+
+install:
+	pip3 install dragonmapper fake-factory
+	npm install -g jade
 
 all: index.html
 
