@@ -427,6 +427,9 @@ html
     h2 Chinese Rail Workers (Steel Shipment)
     p $chinsteelrail
 
+    h2 Swiss Commodities Trader, Glencore XStrata
+    p Reto Bohrmann
+
     h2 American Electronic Engineers, Apple (100,000 Emails)
     p $amereleceng
 
