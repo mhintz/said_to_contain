@@ -85,7 +85,10 @@ person_spacer = '<span class="personspace"> </span>'
 nbsp = '&nbsp'
 
 def name_both(name_gen):
-  return lambda: name_gen.first_name() + nbsp + name_gen.last_name()
+  if random() < 0.5:
+    return lambda: name_gen.first_name_male() + nbsp + name_gen.last_name_male()
+  else:
+    return lambda: name_gen.first_name_female() + nbsp + name_gen.last_name_female()
 
 def name_male(name_gen):
   return lambda: name_gen.first_name_male() + nbsp + name_gen.last_name_male()
@@ -101,7 +104,7 @@ def gen_chinese_male_names(count, linebreak=True):
   return joiner.join(map(genname, range(count)))
 
 def gen_congolese_male_names(count):
-  genname = lambda x: rand_from([fake_uk, fake_french]).first_name_male() + nbsp + rand_from([fake_uk, fake_french]).last_name()
+  genname = lambda x: rand_from([fake_uk, fake_french]).first_name_male() + nbsp + rand_from([fake_uk, fake_french]).last_name_male()
   return person_spacer.join(map(genname, range(count)))
 
 def gen_rand_names(name_gen, count):
@@ -133,13 +136,13 @@ def rand_crew_member():
   return name_male(name_gen)()
 
 def gen_ship_crew():
-  return gen_rand_names(rand_crew_member, randint(15, 19))
+  return gen_rand_names(rand_crew_member, randint(16, 21))
 
 def gen_ship_name():
-  return rand_from(["Miss ", "Spirit of ", "Cap ", "HMS ", "", "", ""]) + rand_from([fake_uk, fake_spain]).first_name()
+  return rand_from(["Miss ", "Spirit of ", "Cap san ", "HMS ", "", ""]) + rand_from([fake_uk, fake_spain]).first_name()
 
 def gen_ship(route):
-  return { "name": gen_ship_name(), "flag": rand_from(["Panama", "Liberia", "Marshall Islands", "Bahamas"]), "company": rand_from(["CMA", "COSCO", "CSC", "Maersk"]), "captain": rand_captain_name(), "crew": gen_ship_crew(), "route": route }
+  return { "name": gen_ship_name(), "flag": rand_from(["Panama", "Liberia", "Marshall Islands", "Bahamas"]), "company": rand_from(["CMA", "COSCO", "CSC", "Maersk", "MSC"]), "captain": rand_captain_name(), "crew": gen_ship_crew(), "route": route }
 
 ship_template = string.Template("""\
 h2 $route
@@ -155,13 +158,10 @@ def rand_ship(route):
   return ship_template.substitute(gen_ship(route))
 
 template_variables = {
-  "chiniron": gen_chinese_male_names(46, False),
-  "chinironrail": gen_chinese_male_names(4, False),
+  "braziliron": gen_rand_names(name_male(fake_brazilian), 46),
+  "ship1": rand_ship("Brazil to China"),
 
   "aussilicon": gen_rand_names(name_male(fake_australia), 24),
-  "ship1": rand_ship("Australia to China"),
-
-  "ausiron": gen_rand_names(name_male(fake_australia), 20),
   "ship2": rand_ship("Australia to China"),
 
   "indotin": gen_rand_names(name_male(fake_filipino), 11),
@@ -312,45 +312,18 @@ html
         column-width: 3.3em;
         text-align: right;
       }
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenLite.min.js")
-    script(type="text/javascript").
-      window.onmousemove = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-      };
-
-      var windowPos = {
-        pos: 0
-      }
-
-      window.onload = function() {
-        console.log('window loaded');
-        TweenLite.to(windowPos, {
-          pos: window.innerHeight,
-          duration: 10,
-          onUpdate: function() {
-            window.scrollTo(0, windowPos.pos)
-          }
-        });
-      }
   body
     h1 iPhone
 
     h2.subheader A Short List of Credits
 
-    h2 Chinese Iron Miners
-    p.chinesenames $chiniron
-
-    h2 Chinese Rail Workers (iron Shipping)
-    p.chinesenames $chinironrail
-
-    h2 Australian Silicon Miners
-    p $aussilicon
+    h2 Brazilian Iron Miners
+    p $braziliron
 
     $ship1
 
-    h2 Australian Iron Miners
-    p $ausiron
+    h2 Australian Silicon Miners
+    p $aussilicon
 
     $ship2
 
