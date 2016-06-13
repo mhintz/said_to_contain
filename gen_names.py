@@ -258,12 +258,11 @@ html
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
     meta(name="viewport" content="width=device-width,initial-scale=1")
-    <!-- link(href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300|Open+Sans:300', rel='stylesheet', type='text/css') -->
+    link(href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300|Open+Sans:300', rel='stylesheet', type='text/css')
     style(type="text/css").
       body {
         font-size: 10px;
-        font-family: sans-serif;
-        /* font-family: "Source Sans Pro", Helvetica, sans-serif; */
+        font-family: "Source Sans Pro", Helvetica, sans-serif;
         font-weight: 200;
         background-color: black;
         color: white;
